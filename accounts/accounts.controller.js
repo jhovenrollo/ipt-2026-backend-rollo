@@ -50,7 +50,8 @@ function revokeToken(req, res, next) {
 }
 
 function register(req, res, next) {
-    accountService.register(req.body, req.get('origin'))
+    const origin = req.get('origin') || req.get('referer') || 'http://localhost:4200';
+    accountService.register(req.body, origin)
         .then(() => res.json({ message: 'Registration successful, please check your email for verification instructions' }))
         .catch(next);
 }
@@ -62,7 +63,8 @@ function verifyEmail(req, res, next) {
 }
 
 function forgotPassword(req, res, next) {
-    accountService.forgotPassword(req.body, req.get('origin'))
+    const origin = req.get('origin') || req.get('referer') || 'http://localhost:4200';
+    accountService.forgotPassword(req.body, origin)
         .then(() => res.json({ message: 'Please check your email for password reset instructions' }))
         .catch(next);
 }

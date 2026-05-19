@@ -38,6 +38,7 @@ async function revokeToken({ token, ipAddress }) {
 }
 
 async function register(params, origin) {
+    console.log('Register origin:', origin);  // add this
     if (await db.Account.findOne({ where: { email: params.email } }))
         throw `Email "${params.email}" is already registered`;
 
@@ -161,6 +162,8 @@ function basicDetails(account) {
 
 async function sendVerificationEmail(account, origin) {
     const verifyUrl = `${origin}/account/verify-email?token=${account.verificationToken}`;
+    console.log('Sending verification email to:', account.email);
+    console.log('Verify URL:', verifyUrl);
     await sendEmail({
         to: account.email,
         subject: 'Sign-up Verification API - Verify Email',

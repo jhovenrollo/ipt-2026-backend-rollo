@@ -13,10 +13,16 @@ async function sendEmail({ to, subject, html }) {
         }
     });
 
-    await transporter.sendMail({
-        from: process.env.EMAIL_FROM,
-        to,
-        subject,
-        html
-    });
+    try {
+        const info = await transporter.sendMail({
+            from: process.env.EMAIL_FROM,
+            to,
+            subject,
+            html
+        });
+        console.log('Email sent successfully:', info.messageId);
+    } catch (err) {
+        console.error('Email sending failed:', err.message);
+        throw err;
+    }
 }
