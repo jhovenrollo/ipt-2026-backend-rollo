@@ -50,7 +50,7 @@ function revokeToken(req, res, next) {
 }
 
 function register(req, res, next) {
-    const origin = req.get('origin') || 'https://ipt-2026-frontend-rollo.onrender.com';
+    const origin = process.env.FRONTEND_URL || req.get('origin') || 'http://localhost:4200';
     accountService.register(req.body, origin)
         .then(() => res.json({ message: 'Registration successful, please check your email for verification instructions' }))
         .catch(next);
@@ -63,7 +63,7 @@ function verifyEmail(req, res, next) {
 }
 
 function forgotPassword(req, res, next) {
-    const origin = req.get('origin') || 'https://ipt-2026-frontend-rollo.onrender.com';
+    const origin = process.env.FRONTEND_URL || req.get('origin') || 'http://localhost:4200';
     accountService.forgotPassword(req.body, origin)
         .then(() => res.json({ message: 'Please check your email for password reset instructions' }))
         .catch(next);
